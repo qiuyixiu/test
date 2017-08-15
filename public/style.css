@@ -1,13 +1,17 @@
 .main-header {
-  padding-top: 60px;
-  padding-bottom: 60px;
+  padding-top: 30px;
+  padding-bottom: 30px;
   margin-bottom: 30px;
   font-size: 24px;
   text-align: left;
   background-color: #FFD700;
 }
 
-.main-header h1 {
+.main-header  {
   margin-top: 0;
   color: #fff;
+}
+
+.panel-heading {
+  background-color: #FFD700;
 }
