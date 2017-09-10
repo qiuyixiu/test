@@ -22,3 +22,31 @@
   background-color :#FFD700;
   color: #fff;
 }
+
+.heart {
+  a {
+      color: #ff0000;
+      transition: 0.5s;
+    }
+    a:hover {
+      color: #000000;
+      transition: 0.5s;
+      text-decoration: none;
+    }
+}
+
+.words-pannel {
+  margin-top: 10px;
+}
+
+.avatar {
+  height: 48px;
+  width: 48px;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: middle;
+  border-radius: 10px;
+  float: left;
+  margin-right: 18px;
+  cursor: default;
+}
