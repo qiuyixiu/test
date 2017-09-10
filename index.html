@@ -7,8 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="./public/style.css">
+    <script src="./public/vue.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
+
   <div class="main-header">
     <div class="container">
       <h1>JavaScript编程入门</h1>
@@ -19,16 +22,24 @@
     </div>
   </div>
   <div class="container">
-    <div class="col-md-12 text-center">
-      <div class="col-md-6 text-right">
+    <div class="col-md-12 ">
+      <div class="col-md-3 ">
         <img src="http://oon3erbcp.bkt.clouddn.com/avata%28qiujingyu%29.png" width="200px", height="200px">
       </div>
-      <div class="col-md-6 text-left">
+      <div class="col-md-6 ">
         <h3>关于我</h3>
         <p>我是丘竟钰，网名一休，微信：yixiuge0755，微信公众号：一休工作室</p>
         <p>喜欢做手工皮具、射箭、跑步</p>
         <p>从2017年4月正式开始学编程做网站</p>
         <p>希望参加这个课程能让自己建立的网站更加生动活泼</p>
+      </div>
+      <div id="app" class="col-md-3">
+          <h3>对老师说话</h3>
+           <div><input v-model ="name" class="form-control"  placeholder="填入你的姓名"></div>
+           <div><input v-model ="account" class="form-control"  placeholder="填入你的新大帐户"></div>
+           <div><input v-model ="content" class="form-control"  placeholder="填入你想对老师说的话"></div>
+           <!--<div> <input v-model ="file" name="file" type="file" accept="image/png,image/gif,image/jpeg" on-change="update"/></div>  -->
+           <div><button v-on:click="sendData">提交给老师</button> </div>
       </div>
     </div>
     <br><br><br>
@@ -166,24 +177,66 @@
   </div>
   <div class="main-footer">
     <div class="container">
-    <div class="col-md-2">
-      一休网站作品链接
-    </div>
-    <div class="col-md-3">
-        <a href="http://www.szleathercraft.com/",  target="_blank") %>
-          深圳市皮雕艺术促进会（正式作品）
-        </a>
-    </div>
-    <div class="col-md-3">
-        <a href="https://job-listing-yixiu.herokuapp.com/",  target="_blank") %>
-          一休工作室招聘网（学习作品）
-        </a>
-    </div>
-    <div class="col-md-4">
-        <a href="https://yixiu2017.herokuapp.com/",  target="_blank") %>
-          一休工作室手工皮具店 (与张瑞兰合作的学习作品)
-        </a>
-    </div>
+      <div class="col-md-2">
+        一休网站作品链接
+      </div>
+      <div class="col-md-3">
+          <a href="http://www.szleathercraft.com/",  target="_blank") %>
+            深圳市皮雕艺术促进会（正式作品）
+          </a>
+      </div>
+      <div class="col-md-3">
+          <a href="https://job-listing-yixiu.herokuapp.com/",  target="_blank") %>
+            一休工作室招聘网（学习作品）
+          </a>
+      </div>
+      <div class="col-md-4">
+          <a href="https://yixiu2017.herokuapp.com/",  target="_blank") %>
+            一休工作室手工皮具店 (与张瑞兰合作的学习作品)
+          </a>
+      </div>
   </div>
+</div>
+</div>
 </body>
 </html>
+<script>
+  // vue官网： https://cn.vuejs.org/v2/guide/
+  // 初始化Vue
+
+  var app = new Vue({
+    el: '#app',   // #app 和html中div#id的 app 对应
+    data: {
+      name:'',
+      account:'',
+      content:'',
+      wordsList: []  // 变量wordsList可以在html使用
+    },
+    methods: {
+      fetchData: function() {
+        axios.get('https://js.xinshengdaxue.com/api/v1/learnJS/course/1/words')
+          .then(function (response) {
+            app.wordsList = response.data.words;
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
+      sendData: function() {
+        axios.post('https://js.xinshengdaxue.com/api/v1/learnJS/sayToMe',
+        { name:app.name,
+          account:app.account,
+          content:app.content
+        })
+          .then(function(response){
+            alert(response.data.code);
+          })
+          .catch(function(error){
+            console.log(error);
+          });
+      }
+    }
+  });
+
+  app.fetchData();
+</script>
